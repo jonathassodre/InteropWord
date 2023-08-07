@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteropWord", "InteropWord.csproj", "{56172657-39A1-419E-9DDB-53BC299D2094}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56172657-39A1-419E-9DDB-53BC299D2094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56172657-39A1-419E-9DDB-53BC299D2094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56172657-39A1-419E-9DDB-53BC299D2094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56172657-39A1-419E-9DDB-53BC299D2094}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAE7C9BE-6839-4BCB-BF16-B67F3BFB2FD3}
+	EndGlobalSection
+EndGlobal
