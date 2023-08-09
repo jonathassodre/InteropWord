@@ -25,31 +25,40 @@ namespace InteropWord
 
         private void btnArquivo_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    //Get the path of specified file
-                    caminhoArquivo = openFileDialog.FileName;
+                    openFileDialog.InitialDirectory = "c:\\";
+                    openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        conteudoArquivo = reader.ReadToEnd();
-                        txtArquivo.Text = caminhoArquivo;
+                        //Get the path of specified file
+                        caminhoArquivo = openFileDialog.FileName;
+
+                        //Read the contents of the file into a stream
+                        var fileStream = openFileDialog.OpenFile();
+
+                        using (StreamReader reader = new StreamReader(fileStream))
+                        {
+                            conteudoArquivo = reader.ReadToEnd();
+                            txtArquivo.Text = caminhoArquivo;
+                        }
                     }
+
+
+
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Aviso!", MessageBoxButtons.OK);
+            }
+
         }
-
-
 
 
 
@@ -61,7 +70,7 @@ namespace InteropWord
                 object matchwholeWord = true;
                 object matchwildCards = false;
                 object matchSoundLike = false;
-                object nmatchAllforms = false;
+                object nmatchAllforms = true;
                 object forward = true;
                 object format = false;
                 object matchKashida = false;
@@ -85,8 +94,10 @@ namespace InteropWord
                                                 ref matchDiactitics, ref matchAlefHamza,
 
                                                  ref matchControl);
-            } catch(Exception ex) {
-                MessageBox.Show("Aviso", ex.Message, MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Aviso!", MessageBoxButtons.OK);
             }
 
         }
@@ -94,7 +105,7 @@ namespace InteropWord
 
         private void CreateWordDocument(object filename, object SaveAs)
         {
-            
+
 
             try
             {
@@ -116,7 +127,7 @@ namespace InteropWord
                                                         ref missing, ref missing, ref missing,
                                                          ref missing, ref missing, ref missing, ref missing);
                     myWordDoc.Activate();
-                    this.FindAndReplace(wordApp, txtAntigo, txtNovo);
+                    this.FindAndReplace(wordApp, txtAntigo.Text, txtNovo.Text);
                     myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -124,20 +135,23 @@ namespace InteropWord
 
                     myWordDoc.Close();
                     wordApp.Quit();
+
+
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Aviso", ex.Message, MessageBoxButtons.OK);
+                MessageBox.Show(ex.Message, "Aviso!", MessageBoxButtons.OK);
             }
 
         }
 
         private void btnGerar_Click(object sender, EventArgs e)
         {
-            
-                
-                CreateWordDocument(caminhoArquivo, ".docx");
+
+
+            CreateWordDocument(caminhoArquivo, txtNovoArquivo.Text + ".docx");
+            MessageBox.Show("Processo Concluído", "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
     }

@@ -65,7 +65,6 @@
             txtArquivo.Name = "txtArquivo";
             txtArquivo.Size = new Size(406, 23);
             txtArquivo.TabIndex = 2;
-            txtArquivo.TextAlign = HorizontalAlignment.Right;
             // 
             // label1
             // 
