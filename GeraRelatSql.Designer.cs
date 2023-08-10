@@ -40,6 +40,7 @@
             btnGerar = new Button();
             txtNovoArquivo = new TextBox();
             label1 = new Label();
+            progressBar1 = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -136,11 +137,19 @@
             label1.TabIndex = 9;
             label1.Text = "Informe o nome do novo arquivo";
             // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(799, 452);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(228, 23);
+            progressBar1.TabIndex = 12;
+            // 
             // GeraRelatSql
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1049, 491);
+            Controls.Add(progressBar1);
             Controls.Add(btnGerar);
             Controls.Add(txtNovoArquivo);
             Controls.Add(label1);
@@ -171,5 +180,6 @@
         private Button btnGerar;
         private TextBox txtNovoArquivo;
         private Label label1;
+        private ProgressBar progressBar1;
     }
 }

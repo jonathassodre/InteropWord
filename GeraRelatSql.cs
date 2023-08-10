@@ -10,6 +10,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web;
+using System.Web.UI;
+using Microsoft.Office.Interop;
 using static InteropWord.Connection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -25,7 +28,7 @@ namespace InteropWord
         private Dictionary<string, string> tabelaComNomesEValores = new Dictionary<string, string>();
         Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
         List<object> rowData = new List<object>();
-        System.Windows.Forms.ProgressBar progressBar = new System.Windows.Forms.ProgressBar();
+
 
         public GeraRelatSql()
         {
@@ -96,7 +99,7 @@ namespace InteropWord
         {
             dataGridView2.Rows.Clear();
             dataGridView2.Columns.Clear();
-            
+
             MontarTabelaComNomesEValores(dataTable);
 
             // Adicione colunas ao DataGridView com os nomes dos campos da consulta
@@ -113,45 +116,29 @@ namespace InteropWord
 
         private void btnGerar_Click(object sender, EventArgs e)
         {
-            string novoArquivo = "";
-
             foreach (DataGridViewRow linha in dataGridView2.Rows)
             {
-                progressBar.Minimum = 0;
-                progressBar.Maximum = dataGridView2.Rows.Count * dataGridView2.Columns.Count;
-                progressBar.Value = 0;
-                progressBar.Visible = true;
-
                 for (int columnIndex = 0; columnIndex < dataGridView2.Columns.Count; columnIndex++)
                 {
-                    int progressCounter = 0;
-
                     string header = dataGridView2.Columns[columnIndex].HeaderText;
                     string cellValue = linha.Cells[columnIndex].Value.ToString();
 
                     FindAndReplace(wordApp, txtArquivo.Text, header, cellValue);
 
-                    progressCounter++;
-                    progressBar.Value = progressCounter;
-
-                    novoArquivo = $"{txtNovoArquivo.Text}_{linha.Index}_{columnIndex=0}.docx";
                 }
-                
+                MessageBox.Show($"Processo concluído para o colaborador {dataTable.Rows[0]}", "Sucesso", MessageBoxButtons.OK);
 
+                string novoArquivo = $"{txtNovoArquivo.Text}_{linha.Index}.docx";
                 Metodos.CreateWordDocument(txtArquivo.Text, novoArquivo);
             }
 
-            MessageBox.Show("Processo Finalizado! Arquivo: " + txtNovoArquivo.Text + ".docx" + " salvo com sucesso!", "Aviso", MessageBoxButtons.OK);
+            MessageBox.Show("Processo concluído!", "Sucesso", MessageBoxButtons.OK);
         }
 
         public static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object filename, object header, object linha)
         {
             try
             {
-                //aqui é só pra não dar erro de compilar
-                object toFindText = header;
-                object replaceWithText = linha;
-
                 object missing = Missing.Value;
 
                 Microsoft.Office.Interop.Word.Document myWordDoc = null;
@@ -167,15 +154,15 @@ namespace InteropWord
                                                         ref missing, ref missing, ref missing,
                                                         ref missing, ref missing, ref missing,
                                                         ref missing, ref missing, ref missing, ref missing);
-                    myWordDoc.Activate();                             
-                         wordApp.Selection.Find.Execute(ref toFindText, ref missing,
-                                                        ref missing, ref missing, ref missing,
-                                                        ref missing, ref missing,
-                                                        ref missing, ref missing, ref replaceWithText,
-                                                        ref missing, ref missing,
-                                                        ref missing, ref missing,
-                                                        ref missing);
-             
+                    myWordDoc.Activate();
+                    wordApp.Selection.Find.Execute(ref header, ref missing,
+                                                   ref missing, ref missing, ref missing,
+                                                   ref missing, ref missing,
+                                                   ref missing, ref missing, ref linha,
+                                                   ref missing, ref missing,
+                                                   ref missing, ref missing,
+                                                   ref missing);
+
                     myWordDoc.Close();
                     wordApp.Quit();
                 }
