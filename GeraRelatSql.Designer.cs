@@ -38,9 +38,6 @@
             btnLista = new Button();
             dataGridView2 = new DataGridView();
             btnGerar = new Button();
-            txtNovoArquivo = new TextBox();
-            label1 = new Label();
-            progressBar1 = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -113,7 +110,7 @@
             // 
             // btnGerar
             // 
-            btnGerar.Location = new Point(201, 452);
+            btnGerar.Location = new Point(893, 437);
             btnGerar.Name = "btnGerar";
             btnGerar.Size = new Size(134, 23);
             btnGerar.TabIndex = 11;
@@ -121,38 +118,12 @@
             btnGerar.UseVisualStyleBackColor = true;
             btnGerar.Click += btnGerar_Click;
             // 
-            // txtNovoArquivo
-            // 
-            txtNovoArquivo.Location = new Point(12, 452);
-            txtNovoArquivo.Name = "txtNovoArquivo";
-            txtNovoArquivo.Size = new Size(183, 23);
-            txtNovoArquivo.TabIndex = 10;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 434);
-            label1.Name = "label1";
-            label1.Size = new Size(183, 15);
-            label1.TabIndex = 9;
-            label1.Text = "Informe o nome do novo arquivo";
-            // 
-            // progressBar1
-            // 
-            progressBar1.Location = new Point(799, 452);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(228, 23);
-            progressBar1.TabIndex = 12;
-            // 
             // GeraRelatSql
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1049, 491);
-            Controls.Add(progressBar1);
+            ClientSize = new Size(1049, 471);
             Controls.Add(btnGerar);
-            Controls.Add(txtNovoArquivo);
-            Controls.Add(label1);
             Controls.Add(dataGridView2);
             Controls.Add(btnLista);
             Controls.Add(txtArquivo);
@@ -178,8 +149,5 @@
         private Button btnLista;
         private DataGridView dataGridView2;
         private Button btnGerar;
-        private TextBox txtNovoArquivo;
-        private Label label1;
-        private ProgressBar progressBar1;
     }
 }

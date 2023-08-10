@@ -136,7 +136,7 @@ namespace InteropWord
             MessageBox.Show("Processo concluído!", "Sucesso", MessageBoxButtons.OK);
         }
 
-        
+
 
         public static void CreateWordDocument(object filename, object SaveAs, List<string> cabecalho, List<string> linha)
         {
@@ -172,7 +172,7 @@ namespace InteropWord
                         FindAndReplace(wordApp, textoCabecalho, textoLinha);
                     }
 
-                   
+
 
                     myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing,
