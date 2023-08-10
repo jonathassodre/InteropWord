@@ -38,6 +38,9 @@
             btnArquivo = new Button();
             btnLista = new Button();
             dataGridView2 = new DataGridView();
+            btnGerar = new Button();
+            txtNovoArquivo = new TextBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -118,11 +121,40 @@
             dataGridView2.Size = new Size(523, 302);
             dataGridView2.TabIndex = 8;
             // 
+            // btnGerar
+            // 
+            btnGerar.Location = new Point(201, 452);
+            btnGerar.Name = "btnGerar";
+            btnGerar.Size = new Size(134, 23);
+            btnGerar.TabIndex = 11;
+            btnGerar.Text = "Gerar novo arquivo";
+            btnGerar.UseVisualStyleBackColor = true;
+            btnGerar.Click += btnGerar_Click;
+            // 
+            // txtNovoArquivo
+            // 
+            txtNovoArquivo.Location = new Point(12, 452);
+            txtNovoArquivo.Name = "txtNovoArquivo";
+            txtNovoArquivo.Size = new Size(183, 23);
+            txtNovoArquivo.TabIndex = 10;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 434);
+            label1.Name = "label1";
+            label1.Size = new Size(183, 15);
+            label1.TabIndex = 9;
+            label1.Text = "Informe o nome do novo arquivo";
+            // 
             // GeraRelatSql
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(547, 441);
+            ClientSize = new Size(547, 491);
+            Controls.Add(btnGerar);
+            Controls.Add(txtNovoArquivo);
+            Controls.Add(label1);
             Controls.Add(dataGridView2);
             Controls.Add(btnLista);
             Controls.Add(txtArquivo);
@@ -150,5 +182,8 @@
         private Button btnArquivo;
         private Button btnLista;
         private DataGridView dataGridView2;
+        private Button btnGerar;
+        private TextBox txtNovoArquivo;
+        private Label label1;
     }
 }

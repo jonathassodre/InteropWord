@@ -51,6 +51,8 @@ namespace InteropWord
         {
             try
             {
+
+
                 object matchCase = true;
                 object matchwholeWord = true;
                 object matchwildCards = false;
@@ -87,6 +89,74 @@ namespace InteropWord
 
         }
 
+        public static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object toFindText, object replaceWithText, object filename)
+        {
+            try
+            {
+                object missing = Missing.Value;
+
+                Microsoft.Office.Interop.Word.Document myWordDoc = null;
+
+                if (File.Exists((string)filename))
+                {
+                    object readOnly = false;
+
+                    object isvisible = false;
+
+                    wordApp.Visible = false;
+                    myWordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                        ref missing, ref missing, ref missing,
+                                                        ref missing, ref missing, ref missing,
+                                                        ref missing, ref missing, ref missing,
+                                                         ref missing, ref missing, ref missing, ref missing);
+                    myWordDoc.Activate();
+
+
+                    object matchCase = true;
+                    object matchwholeWord = true;
+                    object matchwildCards = false;
+                    object matchSoundLike = false;
+                    object nmatchAllforms = false;
+                    object forward = true;
+                    object format = false;
+                    object matchKashida = false;
+                    object matchDiactitics = false;
+                    object matchAlefHamza = false;
+                    object matchControl = false;
+                    object read_only = false;
+                    object visible = true;
+                    object replace = -2;
+                    object wrap = 1;
+
+                    wordApp.Selection.Find.Execute(ref toFindText, ref matchCase,
+                                                    ref matchwholeWord, ref matchwildCards, ref matchSoundLike,
+
+                                                    ref nmatchAllforms, ref forward,
+
+                                                    ref wrap, ref format, ref replaceWithText,
+
+                                                        ref replace, ref matchKashida,
+
+                                                    ref matchDiactitics, ref matchAlefHamza,
+
+                                                     ref matchControl);
+                    //myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
+                    //                                                ref missing, ref missing, ref missing,
+                    //                                                ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+                    //                                                ref missing, ref missing, ref missing);
+
+                    //myWordDoc.Close();
+                    wordApp.Quit();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Aviso!", MessageBoxButtons.OK);
+            }
+
+        }
+
 
         public static void CreateWordDocument(object filename, object SaveAs, string textoAntigo, string textoNovo)
         {
@@ -112,7 +182,6 @@ namespace InteropWord
                                                         ref missing, ref missing, ref missing,
                                                          ref missing, ref missing, ref missing, ref missing);
                     myWordDoc.Activate();
-                    FindAndReplace(wordApp, textoAntigo, textoNovo);
                     myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -131,7 +200,7 @@ namespace InteropWord
 
         }
 
-        public static void CreateWordDocumentSQL(object filename, object SaveAs, string textoAntigo, string textoNovo)
+        public static void CreateWordDocument(object filename, object SaveAs)
         {
 
 
@@ -155,7 +224,6 @@ namespace InteropWord
                                                         ref missing, ref missing, ref missing,
                                                          ref missing, ref missing, ref missing, ref missing);
                     myWordDoc.Activate();
-                    FindAndReplace(wordApp, textoAntigo, textoNovo);
                     myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing,
                                                                     ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -173,7 +241,6 @@ namespace InteropWord
             }
 
         }
-       
 
 
     }
