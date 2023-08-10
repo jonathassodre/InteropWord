@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Web;
-using System.Web.UI;
 using Microsoft.Office.Interop;
 using static InteropWord.Connection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -28,37 +27,46 @@ namespace InteropWord
         private Dictionary<string, string> tabelaComNomesEValores = new Dictionary<string, string>();
         Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
         List<object> rowData = new List<object>();
-
+        string query = "";
+        DataTable dataTable = new DataTable();
 
         public GeraRelatSql()
         {
             InitializeComponent();
         }
 
-        string query = "";
-        DataTable dataTable = new DataTable();
-
-        private void btnTestar_Click(object sender, EventArgs e)
+        private void btnArquivo_Click(object sender, EventArgs e)
         {
-            try
+            var fileStream = Metodos.BuscarArquivo();
+            using (StreamReader reader = new StreamReader(fileStream))
             {
-                query = txtConsulta.Text;
-                CreateCommand(query); // Chama o método CreateCommand da classe Connection
-                using (SqlConnection connection = new SqlConnection(conn.connectionString))
-                {
+                conteudoArquivo = reader.ReadToEnd();
+                txtArquivo.Text = Metodos.caminho;
 
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    adapter.Fill(dataTable);
-                    MessageBox.Show("Consulta executada com sucesso!", "OK", MessageBoxButtons.OK);
-                }
-            }
-            catch (SqlException erro)
-            {
-                MessageBox.Show("Erro ao se conectar no banco de dados \n" +
-                "Verifique os dados informados" + erro);
             }
         }
+
+        //private void btnTestar_Click(object sender, EventArgs e)
+        // {
+        //     try
+        //     {
+        //         query = txtConsulta.Text;
+        //         CreateCommand(query); // Chama o método CreateCommand da classe Connection
+        //         using (SqlConnection connection = new SqlConnection(conn.connectionString))
+        //         {
+
+        //             SqlCommand command = new SqlCommand(query, connection);
+        //             SqlDataAdapter adapter = new SqlDataAdapter(command);
+        //             adapter.Fill(dataTable);
+        //             MessageBox.Show("Consulta executada com sucesso!", "OK", MessageBoxButtons.OK);
+        //         }
+        //     }
+        //     catch (SqlException erro)
+        //     {
+        //         MessageBox.Show("Erro ao se conectar no banco de dados \n" +
+        //         "Verifique os dados informados" + erro);
+        //     }
+        // }
 
         private void MontarTabelaComNomesEValores(DataTable dataTable)
         {
@@ -81,19 +89,9 @@ namespace InteropWord
                 "Verifique os dados informados" + erro);
             }
 
-
         }
 
-        private void btnArquivo_Click(object sender, EventArgs e)
-        {
-            var fileStream = Metodos.BuscarArquivo();
-            using (StreamReader reader = new StreamReader(fileStream))
-            {
-                conteudoArquivo = reader.ReadToEnd();
-                txtArquivo.Text = Metodos.caminho;
 
-            }
-        }
 
         private void btnLista_Click(object sender, EventArgs e)
         {
@@ -116,29 +114,38 @@ namespace InteropWord
 
         private void btnGerar_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow linha in dataGridView2.Rows)
+            foreach (DataGridViewRow row in dataGridView2.Rows)
             {
-                for (int columnIndex = 0; columnIndex < dataGridView2.Columns.Count; columnIndex++)
-                {
-                    string header = dataGridView2.Columns[columnIndex].HeaderText;
-                    string cellValue = linha.Cells[columnIndex].Value.ToString();
+                // Obtenha o cabeçalho da coluna do DataGridView
+                List<string> cabecalho = new();
+                List<string> linha = new();
 
-                    FindAndReplace(wordApp, txtArquivo.Text, header, cellValue);
+                foreach (DataGridViewColumn coluna in dataGridView2.Columns)
+                {
+                    cabecalho.Add(coluna.HeaderText);
+                    linha.Add(row.Cells[coluna.Index].Value.ToString());
+
 
                 }
-                MessageBox.Show($"Processo concluído para o colaborador {dataTable.Rows[0]}", "Sucesso", MessageBoxButtons.OK);
+                string novoNomeArquivo = Path.Combine(Path.GetDirectoryName(txtArquivo.Text), $"Contrato {linha.First()}.docx");
 
-                string novoArquivo = $"{txtNovoArquivo.Text}_{linha.Index}.docx";
-                Metodos.CreateWordDocument(txtArquivo.Text, novoArquivo);
+                CreateWordDocument(txtArquivo.Text, novoNomeArquivo, cabecalho, linha);
+
             }
 
             MessageBox.Show("Processo concluído!", "Sucesso", MessageBoxButtons.OK);
         }
 
-        public static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object filename, object header, object linha)
+        
+
+        public static void CreateWordDocument(object filename, object SaveAs, List<string> cabecalho, List<string> linha)
         {
             try
             {
+                object textoCabecalho = "";
+                object textoLinha = "";
+
+                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
                 object missing = Missing.Value;
 
                 Microsoft.Office.Interop.Word.Document myWordDoc = null;
@@ -146,26 +153,71 @@ namespace InteropWord
                 if (File.Exists((string)filename))
                 {
                     object readOnly = false;
-                    object isVisible = false;
+
+                    object isvisible = false;
 
                     wordApp.Visible = false;
                     myWordDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
                                                         ref missing, ref missing, ref missing,
                                                         ref missing, ref missing, ref missing,
                                                         ref missing, ref missing, ref missing,
-                                                        ref missing, ref missing, ref missing, ref missing);
+                                                         ref missing, ref missing, ref missing, ref missing);
                     myWordDoc.Activate();
-                    wordApp.Selection.Find.Execute(ref header, ref missing,
-                                                   ref missing, ref missing, ref missing,
-                                                   ref missing, ref missing,
-                                                   ref missing, ref missing, ref linha,
-                                                   ref missing, ref missing,
-                                                   ref missing, ref missing,
-                                                   ref missing);
+
+                    for (int i = 0; i < cabecalho.Count; i++)
+                    {
+                        textoCabecalho = cabecalho[i];
+                        textoLinha = linha[i];
+
+                        FindAndReplace(wordApp, textoCabecalho, textoLinha);
+                    }
+
+                   
+
+                    myWordDoc.SaveAs2(ref SaveAs, ref missing, ref missing, ref missing,
+                                                                    ref missing, ref missing, ref missing,
+                                                                    ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+                                                                    ref missing, ref missing, ref missing);
 
                     myWordDoc.Close();
                     wordApp.Quit();
+
+
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Aviso!", MessageBoxButtons.OK);
+            }
+
+        }
+        public static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object cabecalho, object linha)
+        {
+            try
+            {
+                object matchCase = false;
+                object matchwholeWord = false;
+                object matchwildCards = false;
+                object matchSoundLike = false;
+                object nmatchAllforms = false;
+                object forward = true;
+                object format = false;
+                object matchKashida = false;
+                object matchDiactitics = false;
+                object matchAlefHamza = false;
+                object matchControl = false;
+                object read_only = false;
+                object visible = true;
+                object replace = -2;
+                object wrap = 1;
+
+                wordApp.Selection.Find.Execute(ref cabecalho, ref matchCase,
+                                                ref matchwholeWord, ref matchwildCards, ref matchSoundLike,
+                                                ref nmatchAllforms, ref forward,
+                                                ref wrap, ref format, ref linha,
+                                                    ref replace, ref matchKashida,
+                                                ref matchDiactitics, ref matchAlefHamza,
+                                                 ref matchControl);
             }
             catch (Exception ex)
             {
