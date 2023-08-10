@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            btnTestar = new Button();
             lblConsulta = new Label();
             txtConsulta = new TextBox();
             connectionBindingSource = new BindingSource(components);
@@ -45,16 +44,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
-            // btnTestar
-            // 
-            btnTestar.Location = new Point(460, 71);
-            btnTestar.Name = "btnTestar";
-            btnTestar.Size = new Size(75, 23);
-            btnTestar.TabIndex = 0;
-            btnTestar.Text = "Executa";
-            btnTestar.UseVisualStyleBackColor = true;
-            btnTestar.Click += btnTestar_Click;
-            // 
             // lblConsulta
             // 
             lblConsulta.AutoSize = true;
@@ -69,7 +58,7 @@
             txtConsulta.Location = new Point(12, 71);
             txtConsulta.Name = "txtConsulta";
             txtConsulta.ScrollBars = ScrollBars.Vertical;
-            txtConsulta.Size = new Size(442, 23);
+            txtConsulta.Size = new Size(861, 23);
             txtConsulta.TabIndex = 2;
             // 
             // connectionBindingSource
@@ -104,7 +93,7 @@
             // 
             // btnLista
             // 
-            btnLista.Location = new Point(12, 100);
+            btnLista.Location = new Point(879, 71);
             btnLista.Name = "btnLista";
             btnLista.Size = new Size(148, 23);
             btnLista.TabIndex = 7;
@@ -115,10 +104,10 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(12, 129);
+            dataGridView2.Location = new Point(12, 100);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowTemplate.Height = 25;
-            dataGridView2.Size = new Size(523, 302);
+            dataGridView2.Size = new Size(1015, 331);
             dataGridView2.TabIndex = 8;
             // 
             // btnGerar
@@ -151,7 +140,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(547, 491);
+            ClientSize = new Size(1049, 491);
             Controls.Add(btnGerar);
             Controls.Add(txtNovoArquivo);
             Controls.Add(label1);
@@ -162,7 +151,6 @@
             Controls.Add(btnArquivo);
             Controls.Add(txtConsulta);
             Controls.Add(lblConsulta);
-            Controls.Add(btnTestar);
             Name = "GeraRelatSql";
             Text = "GeraRelatSql";
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).EndInit();
@@ -172,8 +160,6 @@
         }
 
         #endregion
-
-        private Button btnTestar;
         private Label lblConsulta;
         private TextBox txtConsulta;
         private BindingSource connectionBindingSource;

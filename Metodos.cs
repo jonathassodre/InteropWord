@@ -202,8 +202,6 @@ namespace InteropWord
 
         public static void CreateWordDocument(object filename, object SaveAs)
         {
-
-
             try
             {
                 Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
