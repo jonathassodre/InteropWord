@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeraRelatSql));
             lblConsulta = new Label();
             txtConsulta = new TextBox();
             connectionBindingSource = new BindingSource(components);
@@ -38,6 +39,7 @@
             btnLista = new Button();
             dataGridView2 = new DataGridView();
             btnGerar = new Button();
+            btnLimpa = new Button();
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -53,10 +55,10 @@
             // 
             // txtConsulta
             // 
-            txtConsulta.Location = new Point(12, 71);
+            txtConsulta.Location = new Point(121, 71);
             txtConsulta.Name = "txtConsulta";
             txtConsulta.ScrollBars = ScrollBars.Vertical;
-            txtConsulta.Size = new Size(861, 23);
+            txtConsulta.Size = new Size(752, 23);
             txtConsulta.TabIndex = 2;
             // 
             // connectionBindingSource
@@ -118,11 +120,22 @@
             btnGerar.UseVisualStyleBackColor = true;
             btnGerar.Click += btnGerar_Click;
             // 
+            // btnLimpa
+            // 
+            btnLimpa.Location = new Point(12, 71);
+            btnLimpa.Name = "btnLimpa";
+            btnLimpa.Size = new Size(103, 23);
+            btnLimpa.TabIndex = 12;
+            btnLimpa.Text = "Limpa Consulta";
+            btnLimpa.UseVisualStyleBackColor = true;
+            btnLimpa.Click += btnLimpa_Click;
+            // 
             // GeraRelatSql
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1049, 471);
+            Controls.Add(btnLimpa);
             Controls.Add(btnGerar);
             Controls.Add(dataGridView2);
             Controls.Add(btnLista);
@@ -131,8 +144,9 @@
             Controls.Add(btnArquivo);
             Controls.Add(txtConsulta);
             Controls.Add(lblConsulta);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "GeraRelatSql";
-            Text = "GeraRelatSql";
+            Text = "Gerador de Relatórios via Word";
             ((System.ComponentModel.ISupportInitialize)connectionBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
@@ -149,5 +163,6 @@
         private Button btnLista;
         private DataGridView dataGridView2;
         private Button btnGerar;
+        private Button btnLimpa;
     }
 }

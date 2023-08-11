@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,16 +18,26 @@ namespace InteropWord
 
         public static SqlCommand CreateCommand(string queryString)
         {
+            SqlCommand command = new SqlCommand();
             string connectionString = @"Data Source=152.67.36.137,49205;Initial Catalog=RIOPLASTIC-HML;User ID=desenv;Password=crhumanos321";
 
             using (SqlConnection connection = new SqlConnection(
                        connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
+                if (queryString != null) 
+                { 
+                    //MessageBox.Show("Informe uma Consulta SQL", "Erro!", MessageBoxButtons.OKCancel);
+                    return command;
+                }
+
+                command = new SqlCommand(queryString, connection);
                 command.Connection.Open();
                 command.ExecuteNonQuery();
                 return command;
             }
+
+
+
         }
     }
 }
