@@ -14,12 +14,12 @@ namespace InteropWord
 {
     public class Connection
     {
-        public string connectionString = @"Data Source=Server,Port;Initial Catalog=BDCliente;User ID=user;Password=123456";
+        public string connectionString = @"Data Source=168.138.232.89,49209;Initial Catalog=SUPERVEL-PRD;User ID=desenv;Password=crhumanos321";
 
         public static SqlCommand CreateCommand(string queryString)
         {
             SqlCommand command = new SqlCommand();
-            string connectionString = @"Data Source=Server,Port;Initial Catalog=BDCliente;User ID=user;Password=123456";
+            string connectionString = @"Data Source=168.138.232.89,49209;Initial Catalog=SUPERVEL-PRD;User ID=desenv;Password=crhumanos321";
 
             using (SqlConnection connection = new SqlConnection(
                        connectionString))

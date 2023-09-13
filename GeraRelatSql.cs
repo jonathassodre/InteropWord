@@ -65,10 +65,7 @@ namespace InteropWord
                     }
                     catch (System.InvalidOperationException erro) {
                         MessageBox.Show("Informe uma consulta SQL!", "Erro", MessageBoxButtons.OKCancel);
-                    }
-
-                    
-                    
+                    }  
                 }
             }
             catch (SqlException erro)
